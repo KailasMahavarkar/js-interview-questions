@@ -1,4 +1,4 @@
-function slicePolyfill(initialIndex = 0, finalIndex) {
+function slicePolyfill(this, initialIndex, finalIndex) {
     if (finalIndex < initialIndex) {
         console.warn("final index cannot be less than initial index");
         return;
@@ -22,7 +22,6 @@ function slicePolyfill(initialIndex = 0, finalIndex) {
 }
 
 Array.prototype.slicePoly = slicePolyfill;
-
 
 console.log(
     [10, 20, 30].slicePoly(0, 4)

@@ -1,0 +1,22 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Question 5</title>
+	</head>
+	<body>
+		<script>
+			const obj = {
+				name: "Alice",
+				greet() {
+					console.log("before st: ", this.name);
+
+					setTimeout(function () {
+						console.log("after st: ", this.name);
+					}, 1000);
+				},
+			};
+			obj.greet();
+		</script>
+	</body>
+</html>

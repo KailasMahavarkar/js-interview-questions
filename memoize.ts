@@ -28,8 +28,6 @@ const foo = memoMaker(() => {
 console.time();
 foo();
 console.timeEnd()
-// foo();
-// foo();
 
 console.time();
 foo();
