@@ -1,0 +1,27 @@
+<html lang="en">
+	<body>
+		<script>
+			const re = {
+				base() {
+					console.log("this -> ", this);
+					function inner() {
+						console.log("base inner --> ", this);
+						const deep = () => {
+							console.log("deep --> ", this);
+						};
+
+						return deep;
+					}
+
+					return inner();
+				},
+				real() {
+					console.log("this -> ", this);
+				},
+			};
+
+			zero = re.base();
+			console.log(zero.deep());
+		</script>
+	</body>
+</html>
