@@ -1,21 +1,55 @@
 import './App.css'
-import useCustomMemo from './questions/useCustomMemo'
-   
-function App() {
-    const memo = useCustomMemo(() => {
-        let sum = 0;
-        for (let i = 0; i < 100000; i++) {
-            sum += i;
-        }
-        return sum;
-    })
+// import { FormWrapper } from './DynamicFormWithContext/DynamicFormContext';
+import DynamicFormWithReducer from './DynamicFormWithReducer/DynamicFormWithReducer';
 
+function App() {
 
     return (
         <>
-            <div>
-                {memo()}
-            </div>
+            <DynamicFormWithReducer
+                config={[
+                    {
+                        type: 'text',
+                        key: 'name',
+                        label: 'Name'
+                    },
+                    {
+                        type: 'select',
+                        key: 'city',
+                        label: 'City',
+                        children: [
+                            { label: 'New York', value: 'NY' },
+                            { label: 'Los Angeles', value: 'LA' },
+                            { label: 'Chicago', value: 'CH' }
+                        ]
+                    },
+                    {
+                        type: 'select',
+                        key: 'country',
+                        label: 'Country',
+                        children: [
+                            { label: 'USA', value: 'USA' },
+                            { label: 'Canada', value: 'CA' },
+                            { label: 'India', value: 'IN' }
+                        ]
+                    },
+                    {
+                        type: 'radio',
+                        key: 'occupation',
+                        label: 'Occupation',
+                        children: [
+                            { label: 'Employed', value: 'employed' },
+                            { label: 'Student', value: 'student' },
+                            { label: 'Business', value: 'business' }
+                        ],
+                        multiple: true
+                    }
+                ]}
+
+                onSubmit={(formData) => {
+                    console.log(formData)
+                }}
+            />
         </>
     )
 }

@@ -1,14 +1,24 @@
+// function curry(mainFunction: Function) {
+//     return function curriedFunction(...args) {
+//         if (args.length >= mainFunction.length) {
+//             return mainFunction(...args);
+//         }
+//         return function (...next) {
+//             return curriedFunction(...args, ...next)
+//         }
+//     }
+// }
+
 function curry(mainFunction: Function) {
-    return function curriedFunction(...args) {
-        if (args.length >= mainFunction.length) {
-            return mainFunction(...args);
-        }
-        return function (...next) {
-            return curriedFunction(...args, ...next)
+    return function outerCurry(currentNumber) {
+        return function (next) {
+            if (!next) return currentNumber;
+            return outerCurry(currentNumber + next)
         }
     }
 }
 
-
-const curriedSum = curry((a, b, c, d) => a + b + c + d);
-console.log(curriedSum(10)(20)(30)(40))
+//                        ([...args])=> some operation
+//                    fn(this -> function, this.length =)
+const curriedSum = curry((a, b) => a - b)
+console.log(curriedSum(10)(20)(30)())
