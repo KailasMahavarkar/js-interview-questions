@@ -45,3 +45,9 @@ console.log(
         username: "kai"
     })(10, 20)
 )
+
+console.log(
+    sum.call({
+        username: "kai"
+    }, 10, 20)
+)

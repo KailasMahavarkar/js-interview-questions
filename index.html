@@ -1,0 +1,154 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./main.css" />
+		<title>Filter JS</title>
+	</head>
+	<body>
+		<div class="container">
+			<div id="filters"></div>
+		</div>
+		<div class="container">
+			<div id="box"></div>
+		</div>
+	</body>
+	<script>
+		let data = [
+			{ body: "cruiser", power: "150cc", seater: "7 seater" },
+			{ body: "retro", power: "200cc", seater: "5 seater" },
+			{ body: "retro", power: "150cc", seater: "2 seater" },
+			{ body: "cruiser", power: "150cc", seater: "2 seater" },
+			{ body: "cruiser", power: "300cc", seater: "3 seater" },
+			{ body: "sports", power: "150cc", seater: "5 seater" },
+			{ body: "retro", power: "300cc", seater: "3 seater" },
+			{ body: "classic", power: "200cc", seater: "3 seater" },
+		];
+
+		// get all unique values from body
+		class filterOne {
+			constructor(data) {
+				this.store = data;
+				this.result = [];
+				this.filters = {
+                    body: [],
+                    power: [],
+                    seater: []
+                };
+				this.filtersLength = 0;
+			}
+
+			filterData(keyName, valueName) {
+				if (!this.filters.hasOwnProperty(keyName)) {
+                    this.filters[keyName] = [];
+					console.log(this.filters)
+				}
+
+				if (!this.filters[keyName]?.includes(valueName)) {
+					this.filters[keyName].push(valueName);
+					this.filtersLength += 1;
+				} else {
+					this.filters[keyName] = this.filters[keyName].filter(
+						(item) => item !== valueName
+					);
+					this.filtersLength -= 1;
+				}
+
+				this.result = this.store.filter((car) => {
+					let checkList = [];
+					let answer = true;
+					for (let i = 0; i < filterKeys.length; i++) {
+						const currentCheck =
+							this.filters[filterKeys[i]].length === 0 ||
+							this.filters[filterKeys[i]].includes(
+								car[filterKeys[i]]
+							);
+						if (!currentCheck) {
+							answer = false;
+							break;
+						}
+					}
+
+					return answer;
+				});
+			}
+
+			log() {
+				console.log("\n", this.result);
+				console.log("filters: ", this.filters, "\n");
+			}
+		}
+
+		function createCard(data) {
+			let card = document.createElement("div");
+			card.classList.add("card");
+
+			let body = document.createElement("div");
+			body.classList.add("body");
+			body.innerText = data.body;
+
+			let power = document.createElement("div");
+			power.classList.add("power");
+			power.innerText = data.power;
+
+			let seater = document.createElement("div");
+			seater.classList.add("seater");
+			seater.innerText = data.seater;
+
+			card.appendChild(body);
+			card.appendChild(power);
+			card.appendChild(seater);
+
+			return card;
+		}
+
+		function createCardAndAppend(data) {
+			for (let i = 0; i < Object.keys(data).length; i++) {
+				let card = createCard(data[i]);
+				boxNode.appendChild(card);
+			}
+		}
+
+		let filterNode = document.querySelector("#filters");
+		const filterKeys = Object.keys(data[0]);
+
+		let filterInstance = new filterOne(data);
+		let boxNode = document.getElementById("box");
+
+		for (let i = 0; i < filterKeys.length; i++) {
+			// create div id for each data keys
+			let div = document.createElement("div");
+			div.id = filterKeys[i];
+
+			// append to filter node
+			filterNode.appendChild(div);
+
+			let values = [...new Set(data.map((item) => item[filterKeys[i]]))];
+
+			// loop through all the values and append to given filters
+			for (let j = 0; j < values.length; j++) {
+				let divElement = document.createElement("div");
+				divElement.id = values[j];
+				divElement.classList.add("filter");
+				divElement.addEventListener("click", (e) => {
+					const isActive = e.target.classList.toggle("active");
+
+					// reset box
+					boxNode.innerHTML = "";
+
+					filterInstance.filterData(filterKeys[i], values[j]);
+					filterInstance.log();
+
+					createCardAndAppend(filterInstance.result);
+				});
+				divElement.innerText = values[j];
+				div.appendChild(divElement);
+			}
+		}
+
+		if (filterInstance.filtersLength === 0) {
+			createCardAndAppend(data);
+		}
+	</script>
+</html>

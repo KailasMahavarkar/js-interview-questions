@@ -1,9 +1,9 @@
 function once(func, context) {
 	let cache = null;
 
-	return function () {
+	return function (...args) {
 		if (func) {
-			cache = func.apply(context || this, arguments);
+			cache = func.apply(context || this, args);
 			func = null;
 		}
 		return cache;
@@ -18,3 +18,7 @@ const callable = once(
 );
 
 callable(10, 20);
+callable(10, 20);
+callable(10, 20);
+callable(10, 20);
+ 

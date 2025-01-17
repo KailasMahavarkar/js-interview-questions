@@ -10,10 +10,9 @@
 				name: "Alice",
 				greet() {
 					console.log("before st: ", this.name);
-
-					setTimeout(function () {
+					(() => {
 						console.log("after st: ", this.name);
-					}, 1000);
+					}).bind(this)();
 				},
 			};
 			obj.greet();

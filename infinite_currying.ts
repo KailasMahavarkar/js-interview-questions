@@ -8,5 +8,5 @@ function sum(a: number) {
 }
 
 console.log(
-    sum(10)(20)(30)()
+    sum(10)(20)(30)(50)
 ); // Output: 70
