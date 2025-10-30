@@ -2,7 +2,6 @@ function sum(a, b) {
     return `sum was ran by ${this?.username} and anwer was ${a + b}`
 }
 
-
 Function.prototype.callPoly = function (context = {}, ...args) {
     if (typeof this !== 'function') {
         throw new TypeError(this + " is not callable");
@@ -46,8 +45,8 @@ console.log(
     })(10, 20)
 )
 
-console.log(
-    sum.call({
-        username: "kai"
-    }, 10, 20)
-)
+// console.log(
+//     sum.callPoly({
+//         username: "kai"
+//     }, 10, 20)
+// )

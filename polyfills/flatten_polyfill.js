@@ -2,6 +2,8 @@ function flattenPolyUnique(depth = 100) {
 	const result = [];
 	const hmap = new Set();
 
+    console.log(this)
+
 	function flat(arr, currentDepth) {
 		for (const item of arr) {
 			if (typeof item === "number") {

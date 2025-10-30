@@ -5,19 +5,19 @@ function memoMaker(fn: Function = () => { }) {
 
     let cache = {};
 
-    function computedFunction(...props) {
+    return function (...props) {
         const propString = JSON.stringify(props);
-        if (propString in cache){
+        if (propString in cache) {
             return cache[propString];
         }
+        console.log("this -->", this)
         cache[propString] = fn.call(this, ...props);
         return cache[propString];
     }
-
-    return computedFunction;
 }
 
-const foo = memoMaker(() => {
+const foo = memoMaker(function () {
+    console.log("this caller context ->", this)
     let sum = 0;
     for (let i = 0; i < 10 ** 6; i++) {
         sum += i;
@@ -26,7 +26,7 @@ const foo = memoMaker(() => {
 });
 
 console.time();
-foo();
+(foo).call({}, 20, 30)
 console.timeEnd()
 
 console.time();

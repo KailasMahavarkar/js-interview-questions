@@ -17,8 +17,4 @@ const callable = once(
 	{ value: 100 }
 );
 
-callable(10, 20);
-callable(10, 20);
-callable(10, 20);
-callable(10, 20);
- 
+callable();

@@ -67,13 +67,26 @@ function consume_throttle() {
 
     throttleSum(10, 20, 30);
     throttleSum(10, 20, 30);
+    throttleSum(10, 20, 30);
+    throttleSum(10, 20, 30);
+    throttleSum(10, 20, 30);
+    throttleSum(10, 20, 30);
+    throttleSum(10, 20, 30);
+
 
     setTimeout(() => {
         console.log("awaiting ...");
         throttleSum(10, 20, 30);
         throttleSum(10, 20, 30);
     }, 1000);
+
+
+    throttleSum(10, 20, 30);
+    throttleSum(10, 20, 30);
+    throttleSum(10, 20, 30);
+    throttleSum(10, 20, 30);
+    throttleSum(10, 20, 30);
 }
 
 consume_throttle();
-consume_debounce()
+// consume_debounce()
