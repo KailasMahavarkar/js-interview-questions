@@ -1,4 +1,5 @@
 function sum(a: number) {
+    console.log(a)
     return function (b: number) {
         if (b) {
             return sum(a + b)

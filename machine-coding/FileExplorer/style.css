@@ -1,0 +1,22 @@
+.folder-or-file {
+	margin-left: 20px;
+	border: 1px solid red;
+}
+
+.folder{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.folder-name{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.file-name{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

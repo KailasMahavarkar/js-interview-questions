@@ -65,7 +65,6 @@ function MyPromise(executor) {
 		});
 	};
 
-	// .catch() method - syntactic sugar for .then(null, onRejected)
 	this.catch = function (onRejected) {
 		return this.then(null, onRejected);
 	};

@@ -11,6 +11,7 @@
 
 function curry(mainFunction: Function) {
     return function outerCurry(currentNumber) {
+        console.log(currentNumber)
         return function (next) {
             if (!next) return currentNumber;
             return outerCurry(currentNumber + next)
@@ -21,4 +22,4 @@ function curry(mainFunction: Function) {
 //                        ([...args])=> some operation
 //                    fn(this -> function, this.length =)
 const curriedSum = curry((a, b) => a - b)
-console.log(curriedSum(10)(20)(30)())
+console.log(curriedSum(10)(20)(30))

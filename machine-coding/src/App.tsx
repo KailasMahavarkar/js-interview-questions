@@ -1,9 +1,9 @@
-import AutoCompleteExample from "./components/AutoComplete/AutoCompleteExample"
+import NestedCheckboxExample from "./components/NestedCheckbox/NestedCheckboxExample"
 
 function App() {
     return (
         <div className='container'>
-            <AutoCompleteExample />
+            <NestedCheckboxExample />
         </div>
     )
 }

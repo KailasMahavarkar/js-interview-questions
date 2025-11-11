@@ -1,9 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 
-interface CheckboxConfig {
-    checked?: boolean;
-    label?: string;
-    children?: CheckboxConfig[];
+export interface CheckboxConfig {
+    checked: boolean;
+    label: string;
+    children: CheckboxConfig[];
 }
 
 interface NestedCheckboxProps {
@@ -11,27 +11,41 @@ interface NestedCheckboxProps {
     onUpdate: (newConfig: CheckboxConfig) => void;
 }
 
+
+const getCheckState = (node: CheckboxConfig): {
+    indeterminate: boolean,
+    checked: boolean
+} => {
+    if (!node.children.length) {
+        return {
+            checked: node.checked,
+            indeterminate: false
+        }
+    }
+
+    const childStates = node.children.map((child) => getCheckState(child));
+    const allChecked = childStates.every((s) => s.checked && !s.indeterminate);
+    const noneChecked = childStates.every((s) => !s.checked && !s.indeterminate);
+
+    return {
+        indeterminate: !allChecked && !noneChecked,
+        checked: allChecked
+    }
+}
+
 const NestedCheckbox = ({ config, onUpdate }: NestedCheckboxProps) => {
     const ref = useRef<HTMLInputElement>(null);
-
-    // Determine state from children
-    const isLeaf = !config.children?.length;
-    const allChecked = config.children?.every(c => c.checked) ?? false;
-    const someChecked = config.children?.some(c => c.checked) ?? false;
-
-    const checked = isLeaf ? (config.checked ?? false) : allChecked;
-    const indeterminate = !isLeaf && someChecked && !allChecked;
+    const { checked, indeterminate } = useMemo(() => getCheckState(config), [config]);
 
     useEffect(() => {
         if (ref.current) ref.current.indeterminate = indeterminate;
     }, [indeterminate]);
 
     const toggle = () => {
-        const newValue = !checked;
         const setAll = (node: CheckboxConfig): CheckboxConfig => ({
             ...node,
-            checked: newValue,
-            children: node.children?.map(setAll),
+            checked: !checked,
+            children: node.children.map(setAll),
         });
         onUpdate(setAll(config));
     };
@@ -42,13 +56,13 @@ const NestedCheckbox = ({ config, onUpdate }: NestedCheckboxProps) => {
                 <input ref={ref} type="checkbox" checked={checked} onChange={toggle} />
                 {" "}{config.label}
             </label>
-            {config.children?.map((child, i) => (
+            {config.children.map((child, i) => (
                 <NestedCheckbox
                     key={i}
                     config={child}
                     onUpdate={newChild => onUpdate({
                         ...config,
-                        children: config.children!.map((c, idx) => idx === i ? newChild : c)
+                        children: config.children.map((c, idx) => idx === i ? newChild : c)
                     })}
                 />
             ))}

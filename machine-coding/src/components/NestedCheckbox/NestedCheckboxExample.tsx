@@ -1,11 +1,5 @@
 import { useState } from "react";
-import NestedCheckbox from "./NestedCheckbox";
-
-interface CheckboxConfig {
-    checked?: boolean;
-    label?: string;
-    children?: CheckboxConfig[];
-}
+import NestedCheckbox, { type CheckboxConfig } from "./NestedCheckbox";
 
 const NestedCheckboxExample = () => {
     const initialConfig: CheckboxConfig = {
@@ -29,7 +23,11 @@ const NestedCheckboxExample = () => {
 
     const [config, setConfig] = useState<CheckboxConfig>(initialConfig);
 
-    return <NestedCheckbox config={config} onUpdate={setConfig} />;
+    const handleUpdate = (newConfig: CheckboxConfig) => {
+        setConfig(newConfig);
+    };
+
+    return <NestedCheckbox config={config} onUpdate={handleUpdate} />;
 };
 
 export default NestedCheckboxExample;
